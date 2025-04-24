@@ -36,7 +36,7 @@ jobs:
       - name: Bump patch version
         id: bump-version
         run: |
-          VERSION=$(npm version patch --no-git-tag-version)
+          VERSION=$(pnpm version patch --no-git-tag-version)
           echo "version=${VERSION}" >> $GITHUB_OUTPUT
 
       - name: Build assets
@@ -44,7 +44,7 @@ jobs:
 
       - name: Bump version and commit build assets
         run: |
-          git add data/ build/ package.json
+          git add package.json
           git commit -m "ci: update build assets (${{ steps.bump-version.outputs.version }})"
           git push
 
