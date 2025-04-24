@@ -18,7 +18,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/brave-experiments/n8n-nodes-brave-search.git"
+    "url": "https://github.com/brave/n8n-nodes-brave-search.git"
   },
   "engines": {
     "node": ">=18.10",
