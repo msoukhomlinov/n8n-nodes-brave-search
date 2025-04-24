@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-brave-search",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "A n8n node for the Brave Search API",
   "keywords": [
     "api",
