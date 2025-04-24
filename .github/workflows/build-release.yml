@@ -48,7 +48,7 @@ jobs:
           git push
 
       - name: Publish NPM package
-        run: pnpm publish --no-git-checks
+        run: pnpm publish --no-git-checks --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
