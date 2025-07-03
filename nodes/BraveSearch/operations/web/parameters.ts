@@ -274,7 +274,7 @@ parameters.push(
 		],
 		default: 'ALL',
 		description:
-			'The search query country, where the results come from. Use 2-character country codes or "Any" for global results. We default to "Any" (global results), while API defaults to "US".',
+			'The search query country, where the results come from. Use 2-character country codes or "Any" for global results. We default to "Any" (global results), whilst API defaults to "US".',
 		required: true,
 	},
 	{
@@ -292,7 +292,6 @@ parameters.push(
 );
 
 // Optional Parameters
-
 if (optional_parameters.length > 0) {
 	parameters.push({
 		displayName: 'Additional Parameters',

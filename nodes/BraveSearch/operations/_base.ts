@@ -9,17 +9,24 @@ export interface BraveSearchOperation {
 }
 
 /**
- * Filters out properties that are null, undefined, or empty strings.
- * The request client automatically handles array-to-CSV conversion.
- * @param params - The parameters object to filter.
- * @returns A new object with only the valuable properties.
+ * Standard buildQuery implementation that properly handles array parameters and filters empty values
+ * @param query - The query parameters object
+ * @returns Processed query parameters suitable for API consumption
  */
-export function filterEmptyOrNil(params: Record<string, any>): Record<string, any> {
-	const result: Record<string, any> = {};
-	for (const [key, value] of Object.entries(params)) {
+export function standardBuildQuery(query: Record<string, any>): Record<string, any> {
+	const { query: q, ...rest } = query;
+	const qs: Record<string, any> = { q };
+
+	for (const [key, value] of Object.entries(rest)) {
 		if (value !== undefined && value !== null && value !== '') {
-			result[key] = value;
+			// Handle array parameters (like result_filter) by converting to comma-separated string
+			if (Array.isArray(value)) {
+				qs[key] = value.join(',');
+			} else {
+				qs[key] = value;
+			}
 		}
 	}
-	return result;
+
+	return qs;
 }

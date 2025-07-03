@@ -38,11 +38,11 @@ export class BraveSearchErrorHandler {
             const fullMessage = [
                 friendlyMessage,
                 '',
-                suggestions.length > 0 ? 'Suggestions:' : '',
+                suggestions.length > 0 ? 'Suggestions:' : undefined,
                 ...suggestions.map(s => `• ${s}`),
                 '',
                 `Error ID: ${errorResponse.error.id}`,
-            ].join('\n');
+            ].filter(line => line !== undefined).join('\n');
 
             return new NodeApiError(node, originalError, {
                 message: fullMessage,
