@@ -27,6 +27,13 @@ const properties: INodeProperties[] = [
 		required: true,
 		noDataExpression: true,
 	},
+	{
+		displayName: 'Enable Debug Logging',
+		name: 'debugMode',
+		type: 'boolean',
+		default: false,
+		description: 'Whether to enable detailed logging of API requests and responses for troubleshooting',
+	},
 
 	...all_operation_parameters,
 ];
