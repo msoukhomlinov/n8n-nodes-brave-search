@@ -96,7 +96,7 @@ export class BraveSearch implements INodeType {
 		const startTime = performance.now();
 		let requestInfo: RequestDebugInfo | undefined;
 
-		if (BraveSearchDebugger.shouldDebug(ctx, index)) {
+		if (await BraveSearchDebugger.shouldDebug(ctx, index)) {
 			requestInfo = {
 				url,
 				queryParams,
@@ -119,7 +119,7 @@ export class BraveSearch implements INodeType {
 				json: true,
 			});
 
-			if (BraveSearchDebugger.shouldDebug(ctx, index)) {
+			if (await BraveSearchDebugger.shouldDebug(ctx, index)) {
 				const responseInfo: ResponseDebugInfo = {
 					statusCode: response.statusCode,
 					headers: response.headers,
@@ -133,7 +133,7 @@ export class BraveSearch implements INodeType {
 
 			return response.body;
 		} catch (error) {
-			if (BraveSearchDebugger.shouldDebug(ctx, index)) {
+			if (await BraveSearchDebugger.shouldDebug(ctx, index)) {
 				BraveSearchDebugger.logError(ctx, error, requestInfo);
 			}
 
