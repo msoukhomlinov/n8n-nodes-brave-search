@@ -91,6 +91,7 @@ export class BraveSearchDebugger {
             try {
                 const credentials = (await ctx.getCredentials('braveSearchApi')) as { debug?: boolean };
                 if (credentials?.debug) return true;
+<<<<<<< HEAD
             } catch {
                 // Ignore error if credentials are not available
             }
@@ -105,6 +106,20 @@ export class BraveSearchDebugger {
             }
         }
 
+=======
+            } catch (error) {
+                // Ignore error if credentials are not available
+            }
+
+            // For compatibility with older versions, check the node parameter as a fallback.
+            if (index !== undefined) {
+                const debugMode = ctx.getNodeParameter('debugMode', index, false) as boolean;
+                if (debugMode) return true;
+            }
+        }
+
+        // Also allow enabling debug mode via environment variables for development.
+>>>>>>> 33c27ed (feat: move debug option to credentials)
         return process.env.BRAVE_SEARCH_DEBUG === 'true' || process.env.NODE_ENV === 'development';
     }
 }
