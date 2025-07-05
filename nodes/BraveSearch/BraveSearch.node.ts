@@ -90,13 +90,14 @@ export class BraveSearch implements INodeType {
 	static async performRequest(ctx: IExecuteFunctions, index: number): Promise<any> {
 		const operation = OPERATIONS[ctx.getNodeParameter('operation', index)];
 		const params = BraveSearch.buildParams(ctx, operation, index);
+		// TODO (Sampson): Modify this approach to support multiple goggle URLs, etc.
 		const queryParams = operation.buildQuery(params);
 		const url = `https://api.search.brave.com/res/v1${operation.endpoint}`;
 
 		const startTime = performance.now();
 		let requestInfo: RequestDebugInfo | undefined;
 
-		if (BraveSearchDebugger.shouldDebug(ctx, index)) {
+		if (await BraveSearchDebugger.shouldDebug(ctx, index)) {
 			requestInfo = {
 				url,
 				queryParams,
@@ -119,7 +120,7 @@ export class BraveSearch implements INodeType {
 				json: true,
 			});
 
-			if (BraveSearchDebugger.shouldDebug(ctx, index)) {
+			if (await BraveSearchDebugger.shouldDebug(ctx, index)) {
 				const responseInfo: ResponseDebugInfo = {
 					statusCode: response.statusCode,
 					headers: response.headers,
@@ -133,7 +134,7 @@ export class BraveSearch implements INodeType {
 
 			return response.body;
 		} catch (error) {
-			if (BraveSearchDebugger.shouldDebug(ctx, index)) {
+			if (await BraveSearchDebugger.shouldDebug(ctx, index)) {
 				BraveSearchDebugger.logError(ctx, error, requestInfo);
 			}
 
