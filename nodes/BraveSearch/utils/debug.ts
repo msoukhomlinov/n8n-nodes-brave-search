@@ -85,18 +85,23 @@ export class BraveSearchDebugger {
         console.error(debugMessage);
     }
 
-    static shouldDebug(ctx?: IExecuteFunctions, index?: number): boolean {
-        // Check for UI parameter first (if context is available)
-        if (ctx && index !== undefined) {
+    static async shouldDebug(ctx?: IExecuteFunctions, index?: number): Promise<boolean> {
+        if (ctx) {
             try {
+                const credentials = (await ctx.getCredentials('braveSearchApi')) as { debug?: boolean };
+                if (credentials?.debug) return true;
+            } catch (error) {
+                // Ignore error if credentials are not available
+            }
+
+            // For compatibility with older versions, check the node parameter as a fallback.
+            if (index !== undefined) {
                 const debugMode = ctx.getNodeParameter('debugMode', index, false) as boolean;
                 if (debugMode) return true;
-            } catch {
-                // Parameter might not exist in older versions, continue with other checks
             }
         }
 
-        // Check for environment variable or development mode
+        // Also allow enabling debug mode via environment variables for development.
         return process.env.BRAVE_SEARCH_DEBUG === 'true' || process.env.NODE_ENV === 'development';
     }
 }
