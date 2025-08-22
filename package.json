@@ -30,6 +30,8 @@
     "preinstall": "npx only-allow pnpm",
     "build": "tsc && gulp build:icons",
     "dev": "tsc --watch",
+    "dev:n8n": "cross-env N8N_CUSTOM_EXTENSIONS=./dist N8N_DEV_RELOAD=true n8n start",
+    "dev:full": "pnpm build && concurrently \"pnpm dev\" \"pnpm dev:n8n\"",
     "format": "prettier nodes credentials --write",
     "lint": "eslint nodes credentials package.json",
     "lintfix": "eslint nodes credentials package.json --fix",
@@ -48,21 +50,24 @@
     ]
   },
   "devDependencies": {
-    "@types/node": "22.14.1",
-    "@typescript-eslint/parser": "8.30.1",
+    "@types/node": "22.16.5",
+    "@typescript-eslint/parser": "8.38.0",
+    "concurrently": "9.1.0",
+    "cross-env": "7.0.3",
     "eslint": "8.57.1",
     "eslint-plugin-n8n-nodes-base": "1.16.3",
     "gulp": "4.0.2",
-    "prettier": "3.5.3",
+    "prettier": "3.6.2",
     "typescript": "5.8.3"
   },
   "peerDependencies": {
-    "n8n-workflow": "^1.84.0"
+    "n8n-workflow": "1.102.0"
   },
   "pnpm": {
     "overrides": {
-      "braces": "^3.0.3",
-      "micromatch": "^4.0.8"
+      "braces": "3.0.3",
+      "micromatch": "4.0.8",
+      "form-data": "4.0.4"
     }
   }
 }
