@@ -212,7 +212,7 @@ parameters.push(
 		type: 'string' as const,
 		default: '',
 		description:
-			'The user\'s search query term. Cannot be empty. Maximum of 400 characters and 50 words in the query.',
+			"The user's search query term. Cannot be empty. Maximum of 400 characters and 50 words in the query.",
 		required: true,
 	},
 	{
