@@ -108,7 +108,7 @@ export class BraveSearch implements INodeType {
 				operation: operation.key,
 				timestamp: new Date().toISOString()
 			};
-			BraveSearchDebugger.logRequest(ctx, requestInfo);
+			await BraveSearchDebugger.logRequest(ctx, requestInfo);
 		}
 
 		try {
@@ -129,13 +129,13 @@ export class BraveSearch implements INodeType {
 					timestamp: new Date().toISOString(),
 					duration: Math.round(performance.now() - startTime)
 				};
-				BraveSearchDebugger.logResponse(ctx, responseInfo, response.body);
+				await BraveSearchDebugger.logResponse(ctx, responseInfo, response.body);
 			}
 
 			return response.body;
 		} catch (error) {
 			if (await BraveSearchDebugger.shouldDebug(ctx, index)) {
-				BraveSearchDebugger.logError(ctx, error, requestInfo);
+				await BraveSearchDebugger.logError(ctx, error, requestInfo);
 			}
 
 			// Enhanced error handling - create user-friendly error

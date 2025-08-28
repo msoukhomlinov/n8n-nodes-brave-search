@@ -22,7 +22,8 @@ export class BraveSearchDebugger {
         return new Date().toISOString();
     }
 
-    static logRequest(ctx: IExecuteFunctions, requestInfo: RequestDebugInfo): void {
+    static async logRequest(ctx: IExecuteFunctions, requestInfo: RequestDebugInfo): Promise<void> {
+        if (!(await this.shouldDebug(ctx))) return;
         const debugMessage = [
             'BRAVE SEARCH API REQUEST',
             ''.padEnd(50, '='),
@@ -41,11 +42,13 @@ export class BraveSearchDebugger {
         console.log(debugMessage);
     }
 
-    static logResponse(ctx: IExecuteFunctions, responseInfo: ResponseDebugInfo, responseBody?: any): void {
+    static async logResponse(ctx: IExecuteFunctions, responseInfo: ResponseDebugInfo, responseBody?: any): Promise<void> {
+        if (!(await this.shouldDebug(ctx))) return;
         const statusLabel = responseInfo.hasError ? 'ERROR' : 'OK';
         const debugMessage = [
-            `BRAVE SEARCH API RESPONSE [${statusLabel}]`,
+            'BRAVE SEARCH API RESPONSE',
             ''.padEnd(50, '='),
+            `Status: ${statusLabel}`,
             `Status Code: ${responseInfo.statusCode}`,
             `Duration: ${responseInfo.duration}ms`,
             `Response Size: ${responseInfo.bodySize} characters`,
@@ -62,7 +65,8 @@ export class BraveSearchDebugger {
         console.log(debugMessage);
     }
 
-    static logError(ctx: IExecuteFunctions, error: any, requestInfo?: RequestDebugInfo): void {
+    static async logError(ctx: IExecuteFunctions, error: any, requestInfo?: RequestDebugInfo): Promise<void> {
+        if (!(await this.shouldDebug(ctx))) return;
         const debugMessage = [
             'BRAVE SEARCH API ERROR',
             ''.padEnd(50, '='),
@@ -94,7 +98,6 @@ export class BraveSearchDebugger {
                 // Ignore error if credentials are not available
             }
 
-            // For compatibility with older versions, check the node parameter as a fallback.
             if (index !== undefined) {
                 try {
                     const debugMode = ctx.getNodeParameter('debugMode', index, false) as boolean;
@@ -105,7 +108,6 @@ export class BraveSearchDebugger {
             }
         }
 
-        // Also allow enabling debug mode via environment variables for development.
         return process.env.BRAVE_SEARCH_DEBUG === 'true' || process.env.NODE_ENV === 'development';
     }
 }
