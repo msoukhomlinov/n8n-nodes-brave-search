@@ -24,9 +24,23 @@ parameters.forEach((p: INodeProperties) => (p.displayOptions = { show: { operati
 // This per-operation function allows for future custom validation or parameter handling
 const buildQuery = (query: Record<string, any>) => {
 	const { query: q, ...rest } = query;
+
+	// Shallow clone to avoid mutating original params
+	const params: Record<string, any> = { ...rest };
+
+	// Omit country if set to 'ALL' (API treats omission as default US; 'ALL' is not a valid value)
+	if (params.country === 'ALL') {
+		delete params.country;
+	}
+
+	// Serialise result_filter arrays to comma-separated values, as required by API
+	if (Array.isArray(params.result_filter)) {
+		params.result_filter = params.result_filter.join(',');
+	}
+
 	return {
 		q,
-		...filterEmptyOrNil(rest),
+		...filterEmptyOrNil(params),
 	};
 };
 
