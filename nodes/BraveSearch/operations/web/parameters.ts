@@ -91,6 +91,22 @@ const optional_parameters: INodeProperties[] = [
 		description: 'Filters search results by when they were discovered',
 	},
 	{
+		displayName: 'Freshness Range From',
+		name: 'freshness_from',
+		type: 'dateTime',
+		default: '',
+		description:
+			'Start date for a custom freshness range (YYYY-MM-DD). When both From and To are set, they override the Freshness option.',
+	},
+	{
+		displayName: 'Freshness Range To',
+		name: 'freshness_to',
+		type: 'dateTime',
+		default: '',
+		description:
+			'End date for a custom freshness range (YYYY-MM-DD). When both From and To are set, they override the Freshness option.',
+	},
+	{
 		displayName: 'Text Decorations',
 		name: 'text_decorations',
 		type: 'boolean',
