@@ -42,7 +42,7 @@ export class BraveSearchErrorHandler {
                 ...suggestions.map(s => `• ${s}`),
                 '',
                 `Error ID: ${errorResponse.error.id}`,
-            ].join('\n');
+            ].filter(line => line !== undefined).join('\n');
 
             return new NodeApiError(node, originalError, {
                 message: fullMessage,
