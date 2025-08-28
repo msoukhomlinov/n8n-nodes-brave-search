@@ -39,7 +39,7 @@ export class BraveSearchErrorHandler {
                 friendlyMessage,
                 '',
                 suggestions.length > 0 ? 'Suggestions:' : '',
-                ...suggestions.map(s => `• ${s}`),
+                ...suggestions.map(s => `- ${s}`),
                 '',
                 `Error ID: ${errorResponse.error.id}`,
             ].join('\n');
