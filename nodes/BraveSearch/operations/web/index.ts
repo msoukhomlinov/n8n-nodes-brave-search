@@ -35,6 +35,18 @@ const buildQuery = (query: Record<string, any>) => {
 		params.result_filter = params.result_filter.join(',');
 	}
 
+	// Custom freshness date range overrides preset freshness when both are set
+	if (params.freshness_from && params.freshness_to) {
+		// Ensure we only pass YYYY-MM-DD format
+		const toYMD = (d: string) => d.slice(0, 10);
+		const from = toYMD(params.freshness_from as string);
+		const to = toYMD(params.freshness_to as string);
+		params.freshness = `${from}to${to}`;
+		// Drop the helper fields
+		delete params.freshness_from;
+		delete params.freshness_to;
+	}
+
 	return {
 		q,
 		...filterEmptyOrNil(params),
