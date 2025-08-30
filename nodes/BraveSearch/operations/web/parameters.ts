@@ -1,5 +1,4 @@
 import type { INodeProperties } from 'n8n-workflow';
-import { CountryCodes, LanguageCodes, MarketCodes } from './data';
 
 const parameters: INodeProperties[] = [];
 const optional_parameters: INodeProperties[] = [
