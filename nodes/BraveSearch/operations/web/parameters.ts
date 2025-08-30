@@ -161,6 +161,20 @@ const optional_parameters: INodeProperties[] = [
 			},
 		],
 	},
+	// TODO: When multiple 'goggles' URLs are supported, adjust buildQuery to emit
+	// repeated 'goggles' keys instead of comma-separated values.
+	{
+		displayName: 'Goggles',
+		name: 'goggles',
+		type: 'string',
+		typeOptions: {
+			multipleValues: true,
+			multipleValueButtonText: 'Add Goggle URL',
+		},
+		default: [],
+		description:
+			"Goggles act as a custom re-ranking on top of Brave's search index. Provide one or more URLs where the desired Goggle(s) will be found.",
+	},
 	{
 		displayName: 'Extra Snippets',
 		name: 'extra_snippets',
